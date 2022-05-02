@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  font-family: "Roboto";
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  @apply text-white bg-red-700 font-normal;
+}
+
+.swiper-pagination-bullet {
+  @apply bg-gray-200;
+}
+.week > div:not(:last-of-type) {
+  border-bottom: 1px solid black;
+}
+.week > div p {
+  @apply py-1;
+}
+.week > div.headings p {
+  @apply text-red-700;
+}
+.week > div p,
+.week .days > div {
+  @apply border-r border-gray-900;
+}
+.week p.progress {
+  @apply border-none border-0;
+}
