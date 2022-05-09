@@ -1,12 +1,11 @@
 import { nanoid } from "nanoid";
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAppContext from "../../context";
 import formatDate from "../../utils/formatDate";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { journeys, setJourneys } = useAppContext();
+  const { journeys, setJourneys, getJourney } = useAppContext();
 
   function startNewJourney() {
     const { startDate, endDate, weeks } = formatDate();
@@ -17,7 +16,7 @@ export default function Home() {
         { id, startDate, endDate, weeks, visions: [], goals: [] },
       ];
     });
-    navigate(`/journeys/${id}`);
+    navigate(`/journeys/${id}`, { state: getJourney(id) });
   }
   function removeJourney(journeyId: string) {
     setJourneys((prev: any) =>
@@ -41,7 +40,9 @@ export default function Home() {
                   {endDate.toLocaleDateString()}
                   <div className="flex flex-col items-center gap-1 shadow">
                     <button className="border px-4 py-1 hover:bg-white hover:text-black transition">
-                      <Link to={`journeys/${id}`}>go to journey</Link>
+                      <Link to={`journeys/${id}`} state={getJourney(id)}>
+                        go to journey
+                      </Link>
                     </button>
                     <button
                       className="border px-2 py-1 hover:bg-white hover:text-black transition"

@@ -11,9 +11,11 @@ import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper";
 import Goals from "../../components/Goals";
 import Tactics from "../../components/Tactics";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // slides
-const slides = ["Vision", "Goals", "Tactics"];
+const slides = ["الرؤية", "الأهداف", "التكتيكات"];
 
 // pagination
 const pagination = {
@@ -24,6 +26,13 @@ const pagination = {
 };
 
 export default function Journey() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  useEffect(() => {
+    if (!state) {
+      navigate("/");
+    }
+  }, []);
   return (
     <main className="w-screen h-screen px-4 py-2 bg-gray-200">
       <Swiper
