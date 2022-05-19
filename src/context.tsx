@@ -19,7 +19,7 @@ export function ContextProvider({ children }: any) {
             end: new Date(week.end),
             added: week.added,
             number: week.number,
-            goal: week.goal,
+            goals: week.goals,
           })),
         }))
       );
@@ -99,32 +99,57 @@ export function ContextProvider({ children }: any) {
   function addgoalToWeek(journeyId: any, goalText: any, weekNumber: any) {
     const journey = getJourney(journeyId);
     const week = journey.weeks.find((week: any) => week.number === weekNumber);
-    week.goal = {
+    const goal = {
+      id: nanoid(5),
       text: goalText,
-      tactics: week?.goal?.tactics || [],
+      tactics: [],
     };
+    week.goals.push(goal);
     setJourneys((prev: any) => [
       ...prev.filter((elem: any) => elem.id !== journeyId),
       journey,
     ]);
   }
-  function removeGoalFromWeek(journeyId: any, weekNumber: any) {
+  function changeGoalContent(
+    journeyId: any,
+    weekNumber: any,
+    goalId: any,
+    newGoal: any
+  ) {
     const journey = getJourney(journeyId);
     const week = journey.weeks.find((week: any) => week.number === weekNumber);
-    week.goal = {
-      text: null,
-      tactics: week.goal.tactics || [],
-    };
-    setJourneys((prev: any) => [
-      ...prev.filter((elem: any) => elem.id !== journeyId),
-      journey,
-    ]);
-  }
-  function addTactic(tactic: any, type: any, weekNumber: any, journeyId: any) {
-    const journey = getJourney(journeyId);
-    const week = journey.weeks.find((week: any) => week.number === weekNumber);
+    const goal = week.goals.find((goal: any) => goal.id === goalId);
+    goal.text = newGoal;
 
-    week.goal.tactics.push({
+    setJourneys((prev: any) => [
+      ...prev.filter((elem: any) => elem.id !== journeyId),
+      journey,
+    ]);
+  }
+  function removeGoalFromWeek(journeyId: any, weekNumber: any, goalId: any) {
+    const journey = getJourney(journeyId);
+    const week = journey.weeks.find((week: any) => week.number === weekNumber);
+    week.goals = week.goals.filter((goal: any) => goal.id !== goalId);
+    if (week.goals.length === 0) {
+      week.added = false;
+    }
+    setJourneys((prev: any) => [
+      ...prev.filter((elem: any) => elem.id !== journeyId),
+      journey,
+    ]);
+  }
+  function addTactic(
+    tactic: any,
+    type: any,
+    weekNumber: any,
+    goalId: any,
+    journeyId: any
+  ) {
+    const journey = getJourney(journeyId);
+    const week = journey.weeks.find((week: any) => week.number === weekNumber);
+    const goal = week.goals.find((goal: any) => goal.id === goalId);
+
+    goal.tactics.push({
       id: nanoid(5),
       text: tactic,
       type,
@@ -135,12 +160,17 @@ export function ContextProvider({ children }: any) {
       journey,
     ]);
   }
-  function deleteTactic(tacticId: any, weekNumber: any, journeyId: any) {
+  function deleteTactic(
+    tacticId: any,
+    weekNumber: any,
+    goalId: any,
+    journeyId: any
+  ) {
     const journey = getJourney(journeyId);
-    let week = journey.weeks.find((week: any) => week.number === weekNumber);
-    week.goal.tactics = week.goal.tactics.filter(
-      (tactic: any) => tactic.id !== tacticId
-    );
+    const week = journey.weeks.find((week: any) => week.number === weekNumber);
+    const goal = week.goals.find((goal: any) => goal.id === goalId);
+
+    goal.tactics = goal.tactics.filter((tactic: any) => tactic.id !== tacticId);
 
     setJourneys((prev: any) => [
       ...prev.filter((elem: any) => elem.id !== journeyId),
@@ -174,6 +204,7 @@ export function ContextProvider({ children }: any) {
         removeGoalFromWeek,
         deleteIdea,
         addWeek,
+        changeGoalContent,
       }}
     >
       {children}
