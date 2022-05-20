@@ -72,12 +72,21 @@ export default function Goals() {
           })}
           {
             <li
-              key={"wqrqwrqwrqw"}
+              key={"ddddd"}
               className="flex min-h-10 max-w-full gap-1 items-center bg-white w-fit px-2 py-1 rounded-md shadow-md"
             >
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
+                  if (goalText.trim() === "") {
+                    toast.error("goal must not be empty");
+                  }
+                  const goal = journey?.goals?.find(
+                    (elem: any) => elem.text === goalText
+                  );
+                  if (goal) {
+                    return toast.error("goal already exist !");
+                  }
                   addGoal(goalText, id);
                   setGoalText("");
                 }}

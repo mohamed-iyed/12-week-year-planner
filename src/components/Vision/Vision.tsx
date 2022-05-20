@@ -18,7 +18,7 @@ import Religious from "../../assets/images/Quran.svg";
 // vision options
 const options = [
   "الشخصي",
-  "ديني",
+  "الديني",
   "العمل",
   "المدرسةّ او الجامعة",
   "الصحة",
@@ -48,7 +48,7 @@ const optionsImages = options.reduce((obj: any, elem: string) => {
 }, {});
 
 export default function Vision() {
-  const [sector, setSector] = useState("");
+  const [sector, setSector] = useState("الشخصي");
   const { id } = useParams();
   const { journeys, getJourney, addVision } = useAppContext();
   const [journey, setJourney] = useState<any>({});

@@ -60,7 +60,6 @@ export default function Tactics() {
               e.preventDefault();
               const weekNumber: any = nextWeek()?.number;
               if (weekNumber) {
-                console.log(weekNumber);
                 addWeek(id, weekNumber);
                 addgoalToWeek(id, null, weekNumber);
               }
@@ -112,6 +111,7 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
     addgoalToWeek,
     removeGoalFromWeek,
     changeGoalContent,
+    journeys,
   } = useAppContext();
   const { id } = useParams();
 
@@ -127,7 +127,7 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
   return (
     <article
       key={goal?.id}
-      className="week min-w-[500px] h-fit mx-auto border border-black rounded-md relative"
+      className="week w-[550px] min-w-[550px] h-fit mx-auto border border-black rounded-md relative"
     >
       <button
         className="absolute left-2 top-1 bg-white shadow border px-4 pointer"
@@ -185,28 +185,31 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
           </span>
         </span>
       </div>
-      <div className="headings flex gap-2">
+      <div className="headings flex">
         <p className="basis-40">التكتيكات </p>
-        <div className="days gap-1 flex-1 grid grid-cols-7">
+        <div className="days flex-1 grid grid-cols-7">
           {days.map((day: string, i: number) => (
-            <p key={i}>{day}</p>
+            <p key={i} className="text-center p-1">
+              {day}
+            </p>
           ))}
         </div>
         <div>
-          <p className="progress w-[65px]">نسبة النجاح</p>
+          <p className="progress w-[65px] text-left">نسبة النجاح</p>
         </div>
       </div>
       {goal?.tactics?.map((tactic: any) => {
-        console.log(tactic.type === "number");
+        console.log(tactic.type === "number" || tactic.type === "checkbox");
+        console.log(tactic.values);
         return (
-          <div className="flex gap-2" key={tactic.id}>
+          <div className="flex" key={tactic.id}>
             <p className="basis-40 flex justify-between">
               {tactic.text}{" "}
               <button>
                 <img src={Delete} width="20" height="20" alt="حذف التكتيك" />
               </button>
             </p>
-            <div className="days grid grid-cols-7 gap-1 flex-1">
+            <div className="days grid grid-cols-7 flex-1">
               {tactic.type === "number"
                 ? tactic.values.map((val: any, i: number) => (
                     <TacticNumber key={i} val={val} index={i} />
@@ -216,7 +219,7 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
                   ))}
             </div>
             <div>
-              <p className="progress w-[65px]">نسبة النجاح</p>
+              <p className="progress w-[65px] text-left">نسبة النجاح</p>
             </div>
           </div>
         );
@@ -225,7 +228,6 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(newTactic.type);
             if (newTactic.type === "0") {
               return toast.error("اختر نوع التكتيك من فضلك");
             }

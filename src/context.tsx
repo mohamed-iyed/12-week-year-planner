@@ -149,11 +149,17 @@ export function ContextProvider({ children }: any) {
     const week = journey.weeks.find((week: any) => week.number === weekNumber);
     const goal = week.goals.find((goal: any) => goal.id === goalId);
 
+    let values;
+    if (type === "number") {
+      values = [0, 0, 0, 0, 0, 0, 0];
+    } else if (type === "checkbox") {
+      values = [false, false, false, false, false, false, false];
+    }
     goal.tactics.push({
       id: nanoid(5),
       text: tactic,
       type,
-      values: [, , , , , ,],
+      values,
     });
     setJourneys((prev: any) => [
       ...prev.filter((elem: any) => elem.id !== journeyId),
