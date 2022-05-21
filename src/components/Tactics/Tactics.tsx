@@ -91,7 +91,7 @@ function Week({ allGoals, goals, number, start, end }: any) {
     <>
       {goals?.map((goal: any, i: number) => (
         <WeekGoal
-          key={i}
+          key={i * Math.random()}
           allGoals={allGoals}
           goal={goal}
           start={start}
@@ -161,12 +161,14 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
                 changeGoalContent(id, number, goal.id, e.target.value)
               }
             >
-              <option key="initial">اختر هدف</option>
-              {allGoals?.map((goal: any) => (
-                <option key={goal.goalId} value={goal.text}>
-                  {goal.text}
-                </option>
-              ))}
+              <option key="sdopfopdsfkopsdfk">اختر هدف</option>
+              {allGoals?.map((g: any) => {
+                return (
+                  <option key={g.id} value={g.text}>
+                    {g.text}
+                  </option>
+                );
+              })}
             </select>
           )}
           <span className="block">
@@ -199,8 +201,6 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
         </div>
       </div>
       {goal?.tactics?.map((tactic: any) => {
-        console.log(tactic.type === "number" || tactic.type === "checkbox");
-        console.log(tactic.values);
         return (
           <div className="flex" key={tactic.id}>
             <p className="basis-40 flex justify-between">
@@ -212,10 +212,26 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
             <div className="days grid grid-cols-7 flex-1">
               {tactic.type === "number"
                 ? tactic.values.map((val: any, i: number) => (
-                    <TacticNumber key={i} val={val} index={i} />
+                    <TacticNumber
+                      key={i}
+                      val={val}
+                      index={i}
+                      journeyId={id}
+                      weekNumber={number}
+                      goalId={goal.id}
+                      tacticId={tactic.id}
+                    />
                   ))
                 : tactic.values.map((val: any, i: number) => (
-                    <TacticCheckBox key={i} val={val} index={i} />
+                    <TacticCheckBox
+                      key={i}
+                      val={val}
+                      index={i}
+                      journeyId={id}
+                      weekNumber={number}
+                      goalId={goal.id}
+                      tacticId={tactic.id}
+                    />
                   ))}
             </div>
             <div>
@@ -276,8 +292,27 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
   );
 }
 
-function TacticNumber({ val, index }: any) {
+function TacticNumber({
+  val,
+  index,
+  journeyId,
+  weekNumber,
+  goalId,
+  tacticId,
+}: any) {
   const [tValue, setTvalue] = useState(val);
+  const { changeTacticDayValue } = useAppContext();
+
+  useEffect(() => {
+    changeTacticDayValue(
+      journeyId,
+      weekNumber,
+      goalId,
+      tacticId,
+      index,
+      tValue
+    );
+  }, [tValue]);
 
   return (
     <div>
@@ -290,9 +325,28 @@ function TacticNumber({ val, index }: any) {
     </div>
   );
 }
-function TacticCheckBox({ val, index }: any) {
+function TacticCheckBox({
+  val,
+  index,
+  journeyId,
+  weekNumber,
+  goalId,
+  tacticId,
+}: any) {
   const [tValue, setTvalue] = useState(val);
 
+  const { changeTacticDayValue } = useAppContext();
+
+  useEffect(() => {
+    changeTacticDayValue(
+      journeyId,
+      weekNumber,
+      goalId,
+      tacticId,
+      index,
+      tValue
+    );
+  }, [tValue]);
   return (
     <div>
       <input

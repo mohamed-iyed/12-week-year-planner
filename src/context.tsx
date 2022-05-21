@@ -183,6 +183,25 @@ export function ContextProvider({ children }: any) {
       journey,
     ]);
   }
+  function changeTacticDayValue(
+    journeyId: any,
+    weekNumber: any,
+    goalId: any,
+    tacticId: any,
+    index: number,
+    newValue: any
+  ) {
+    const journey = getJourney(journeyId);
+    const week = journey.weeks.find((week: any) => week.number === weekNumber);
+    const goal = week.goals.find((goal: any) => goal.id === goalId);
+    const tactic = goal.tactics.find((tactic: any) => tactic.id === tacticId);
+    tactic.values[index] = newValue;
+
+    setJourneys((prev: any) => [
+      ...prev.filter((elem: any) => elem.id !== journeyId),
+      journey,
+    ]);
+  }
   function addWeek(id: any, number: any) {
     const journey = getJourney(id);
     const week = journey.weeks.find((week: any) => week.number === number);
@@ -211,6 +230,7 @@ export function ContextProvider({ children }: any) {
         deleteIdea,
         addWeek,
         changeGoalContent,
+        changeTacticDayValue,
       }}
     >
       {children}
