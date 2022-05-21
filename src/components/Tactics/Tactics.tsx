@@ -111,7 +111,6 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
     addgoalToWeek,
     removeGoalFromWeek,
     changeGoalContent,
-    journeys,
   } = useAppContext();
   const { id } = useParams();
 
@@ -205,7 +204,10 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
           <div className="flex" key={tactic.id}>
             <p className="basis-40 flex justify-between">
               {tactic.text}{" "}
-              <button>
+              <button
+                onClick={() => deleteTactic(tactic.id, number, goal.id, id)}
+                className="self-start"
+              >
                 <img src={Delete} width="20" height="20" alt="حذف التكتيك" />
               </button>
             </p>
