@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 export default function Goals() {
   const [goalText, setGoalText] = useState("");
-
+  // get the journey id
   const { id } = useParams();
 
   const { journeys, addGoal, deleteGoal, getJourney } = useAppContext();
@@ -18,7 +18,7 @@ export default function Goals() {
   useEffect(() => {
     setJourney(getJourney(id));
   }, [journeys]);
-
+	
   return (
     <>
       <h1 className="flex items-center gap-2 text-4xl px-4 py-2 bg-red-400 w-fit mx-auto rounded-lg text-white shadow-md">
