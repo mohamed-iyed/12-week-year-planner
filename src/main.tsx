@@ -11,6 +11,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ContextProvider } from "./context";
 
+if('serviceWorker' in navigator){
+	navigator.serviceWorker.register('/sw.js');
+}
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ContextProvider>
     <Router>

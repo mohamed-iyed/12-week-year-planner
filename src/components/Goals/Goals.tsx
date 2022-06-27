@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // context
@@ -79,7 +78,7 @@ export default function Goals() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (goalText.trim() === "") {
-                    toast.error("goal must not be empty");
+                    return toast.error("goal must not be empty");
                   }
                   const goal = journey?.goals?.find(
                     (elem: any) => elem.text === goalText

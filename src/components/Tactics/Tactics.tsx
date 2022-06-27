@@ -237,7 +237,7 @@ function WeekGoal({ goal, start, end, number, allGoals }: any) {
                   ))}
             </div>
             <div>
-              <p className="progress w-[65px] text-left">نسبة النجاح</p>
+		    <p className="progress w-[65px] text-center">-</p>
             </div>
           </div>
         );

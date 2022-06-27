@@ -85,7 +85,7 @@ export default function Vision() {
       </p>
       <section className="flex-1 pb-14 flex flex-wrap gap-5 bg-gray-50 rounded-md shadow-xl p-2">
         {journey?.visions?.length === 0 && (
-          <article className="p-1 basis-80 border-0 border-l-2 flex flex-col gap-1 rounded-lg">
+          <article className="p-1 basis-80 border-0 flex flex-col gap-1 rounded-lg">
             <header className="font-light">مثال :</header>
             <h4 className="text-red-900 text-lg font-semibold">
               الجانب الشخصي :
@@ -152,7 +152,7 @@ function VisionSector({ id: visionId, text, ideas }: any) {
 
   return (
     <article
-      className={`relative p-1 md:min-w-[300px] md:max-w-[360px] max-w-full border-0 sm:border-l-2 flex flex-col gap-1 rounded-lg`}
+      className={`relative p-1 min-w-[270px] md:min-w-[300px] md:max-w-[360px] max-w-full border-0 sm:border-l-2 flex flex-col gap-1 rounded-lg`}
     >
       <button
         onClick={() => deleteVision(visionId, id)}

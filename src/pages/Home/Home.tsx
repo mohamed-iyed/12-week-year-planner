@@ -25,11 +25,11 @@ export default function Home() {
   }
   return (
     <main className="hero w-screen h-screen bg-hero-bg bg-cover flex flex-col gap-8 items-center justify-center">
-      <h1 className="title text-white text-9xl">12 Week Year</h1>
+      <h1 className="title text-center text-white text-9xl">12 Week Year</h1>
       <div>
         {journeys?.length > 0 && (
           <>
-            <h2 className="text-white">Your existing journeys : </h2>
+            <h2 className="text-white text-center">Your existing journeys : </h2>
             <ul>
               {journeys?.map(({ id, startDate, endDate }: any, i: number) => (
                 <li
@@ -38,7 +38,7 @@ export default function Home() {
                 >
                   journey {i + 1} : from {startDate.toLocaleDateString()} to{" "}
                   {endDate.toLocaleDateString()}
-                  <div className="flex flex-col items-center gap-1 shadow">
+                  <div className="flex flex-col items-center gap-1">
                     <button className="border px-4 py-1 hover:bg-white hover:text-black transition">
                       <Link to={`journeys/${id}`} state={getJourney(id)}>
                         go to journey

@@ -35,9 +35,11 @@ export default function Journey() {
         grabCursor={true}
         initialSlide={3}
         spaceBetween={40}
-        className="slides-swiper w-full h-full"
-      >
-        <SwiperSlide className="pb-2 md:pb-0 bg-white rounded-lg shadow p-4 overflow-auto flex flex-col gap-2">
+	className="slides-swiper w-full h-full"
+	noSwiping={true}
+	noSwipingClass={'no-swipe-slide'}
+       >
+        <SwiperSlide className="no-swipe-slide pb-2 md:pb-0 bg-white rounded-lg shadow p-4 overflow-auto flex flex-col gap-2">
           <Tactics />
         </SwiperSlide>
 
